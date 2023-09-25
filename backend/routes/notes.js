@@ -58,4 +58,22 @@ router.put("/update/:id", fetchuser, async (req, res) => {
     }
    
 })
+//get notes http://localhost:7000/api/notes/delete
+router.delete("/delete/:id", fetchuser, async (req, res) => {
+    try{
+    let note= await Note.findById(req.params.id);
+    if(!note){
+        return res.status(404).json({error:"network fail 1"})
+    }
+    if( note.user.toString() !==req.user.id){
+        return res.status(401).json({error:"network fail 2"})
+    }
+    note=await Note.findByIdAndDelete(req.params.id);
+    res.json({delete:"success"})
+    }
+    catch(e){
+        return res.status(404).json({error:"network fail 3"})
+    }
+   
+})
 module.exports = router;

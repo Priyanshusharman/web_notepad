@@ -1,5 +1,5 @@
 import React,{useState} from "react";
-import notescontext from "./";
+import notescontext from "./notescontext";
 const Notestate=(props)=>{
     const inotes=[
         {

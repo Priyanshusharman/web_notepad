@@ -69,7 +69,7 @@ router.delete("/delete/:id", fetchuser, async (req, res) => {
         return res.status(401).json({error:"network fail 2"})
     }
     note=await Note.findByIdAndDelete(req.params.id);
-    res.json({delete:"success"})
+    res.json({delete:"success",})
     }
     catch(e){
         return res.status(404).json({error:"network fail 3"})

@@ -30,13 +30,34 @@ const Notestate=(props)=>{
           "__v": 0
         }
       ]
-      const [notes,setnotes]=useState(inotes)
+      const [totalnotes,setnotes]=useState(inotes);
+      //add notes
+      const addnotes=({notes_name,notes,tag})=>{
+        const note={
+          "_id": "651142021b817b87b3a2b525",
+          "user": "64ec393bd1d8df0b87e4bf09",
+          "notes_name": notes_name,
+          "notes": notes,
+          "tag": tag,
+          "date": "2023-09-25T08:17:06.251Z",
+          "__v": 0
+        }; 
+        setnotes(totalnotes.concat(note));
+      }
+      //update notes
+      const updatenotes=(id,notes_name,notes,tag)=>{
+
+      }
+      //delete notes
+      const deletenotes=(id)=>{
+        console.log(id)
+        const newnotesss=totalnotes.filter((note)=>{return note._id!==id})
+        setnotes(newnotesss)
+      }
     return(
-        <notescontext.Provider value={{notes,setnotes}}>
+        <notescontext.Provider value={{totalnotes,addnotes,updatenotes,deletenotes}}>
             {props.children}
         </notescontext.Provider>
-
-
     )
 }
 export default Notestate;

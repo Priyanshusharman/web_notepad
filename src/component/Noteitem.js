@@ -1,4 +1,4 @@
-import React,{useContext} from 'react'
+import React,{useContext, useEffect} from 'react'
 import notescontext from '../context/notes/notescontext';
 const Noteitem = (props) => {
     const {updatenotes,deletenotes}=useContext(notescontext)

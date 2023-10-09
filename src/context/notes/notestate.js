@@ -51,7 +51,7 @@ const Notestate = (props) => {
   //update notes
   const updatenotes =async(id, notes_name, notes, tag) => {
     const requestOptions = {
-      method: 'post',
+      method: 'put',
       headers:
       {
         'Accept': 'application/json',
@@ -65,6 +65,7 @@ const Notestate = (props) => {
       })
     };
     await fetch(`http://localhost:7000/api/notes/update/${id}`, requestOptions)
+    getnotes();
   }
   //delete notes
   const deletenotes =async (id) => {
@@ -79,8 +80,13 @@ const Notestate = (props) => {
     // const newnotesss = totalnotes.filter((note) => { return note._id !== id })
     // setnotes(newnotesss)
   }
+  const clear=()=>{
+    document.querySelector("#notes_name").value="";
+    document.querySelector("#tag").value="";
+    document.querySelector("#notes").value="";
+  }
   return (
-    <notescontext.Provider value={{ totalnotes, addnotes, updatenotes, deletenotes, getnotes }}>
+    <notescontext.Provider value={{ totalnotes, addnotes, updatenotes, deletenotes, getnotes ,clear}}>
       {props.children}
     </notescontext.Provider>
   )

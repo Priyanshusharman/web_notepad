@@ -1,13 +1,24 @@
 import React,{useContext, useEffect} from 'react'
 import notescontext from '../context/notes/notescontext';
 const Noteitem = (props) => {
-    const {updatenotes,deletenotes}=useContext(notescontext)
+    const {deletenotes,updatenotes}=useContext(notescontext)
     const { note } = props;
-    const update=()=>{
-        updatenotes(note._id)
-    }
     const deleten=()=>{
         deletenotes(note._id)
+    }
+    const name=document.querySelector("#notes_name");
+    const tag=document.querySelector("#tag");
+    const notes=document.querySelector("#notes");
+    const editn= async ()=>{
+        await updatenotes(note._id,name.value,notes.value,tag.value);
+    }
+    const update = () => {
+        console.log("update")
+        name.value=note.notes_name;
+        tag.value=note.tag;
+        notes.value=note.notes;
+        const edit =document.querySelector("#editnote");
+        edit.onclick = editn;
     }
     return (
         <div className='col-md-3'>

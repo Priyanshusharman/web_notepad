@@ -1,7 +1,7 @@
 import React ,{useContext,useState} from 'react'
 import notescontext from '../context/notes/notescontext'
 const Addnotes = () => {
-   const {addnotes}=useContext(notescontext)
+   const {addnotes,clear}=useContext(notescontext)
    const note={
     notes_name:"",notes:"",tag:""
    }
@@ -11,9 +11,12 @@ const Addnotes = () => {
    }
    const addnotesto=(e)=>{
     e.preventDefault()
-    console.log("add",e)
+    // console.log("add",e)
     addnotes(adnote)
    }
+  //  const editnote=(id)=>{
+  //   updatenotes(id,adnote.notes_name,adnote.notes,adnote.tag)
+  //  }
   return (
     <div className='container'>
       <div className="mb-3">
@@ -26,7 +29,9 @@ const Addnotes = () => {
         <label htmlFor="notes" className="form-label">Title</label>
         <textarea className="form-control" id="notes" name='notes' rows="3" onChange={onchange}></textarea>
       </div>
-      <button className='btn btn-primary' onClick={addnotesto}>Add</button>
+      <button className='btn btn-primary ' onClick={addnotesto}>Add</button>
+      <button className='btn btn-primary mx-4' id='editnote'>Edits</button>
+      <button className='btn btn-primary ' onClick={clear}>Clear</button>
     </div>
   )
 }

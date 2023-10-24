@@ -14,6 +14,9 @@ const Home = () => {
       <div className="container">
         <h2>YOUR notes</h2>
         <div className="row">
+        <div className="container">
+          {totalnotes.length===0 && "Not Note yet display pleass Add note"}
+        </div>
           {totalnotes.map((note) => {
             return <Noteitem key={note._id} note={note} />
           })}

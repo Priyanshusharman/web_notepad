@@ -15,12 +15,13 @@ router.post("/signup", [
     body('password', "password must be grater than 5 character").isLength({ min: 5 }),
 ], async (req, res) => {
     const errors = validationResult(req);
+    let success=false;
     if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() })
+        return res.status(400).json({ success:success,errors: errors.array() })
     }
-    let user = await User.findOne({ email: req.body.email });
+    let user = await User.findOne({email: req.body.email });
     if (user) {
-        return res.status(400).json({ error: "Already user exit" });
+        return res.status(400).json({success:success, error:"Already user exit"});
     }
     //hash the password
     var salt = await bcrypt.genSaltSync(10);
@@ -35,7 +36,8 @@ router.post("/signup", [
     user = await User.findOne({ email: req.body.email });
     let data = { user: { id: user.id } };
     const token = jwt.sign(data, jwt_secure_key);
-    res.json({ token: token })
+    success=true;
+    res.json({success:success, token: token })
 })
 // route=2login http://localhost:7000/api/auth/login
 router.post('/login', [
@@ -43,18 +45,19 @@ router.post('/login', [
     body('password', 'password is empty').exists()
 ], async (req, res) => {
     const error = validationResult(req);
+    let success=false;
     if (!error.isEmpty()) {
-        return res.status(400).json({ erroe: error.array() })
+        return res.status(400).json({ success:success,erroe: error.array() })
     }
     const { email, password } = req.body;
     let user = await User.findOne({ email });
     try {
         if (!user) {
-            return res.status(400).json({ error: "bad credincal" });
+            return res.status(400).json({success:success, error: "bad credincal" });
         }
         let passcheck =await bcrypt.compare(password, user.password);
         if (!passcheck) {
-            res.json({ error: "invalid  credantil" })
+            return res.json({success:success, error: "invalid  credantil" })
         }
     }
     catch (error) {
@@ -62,7 +65,8 @@ router.post('/login', [
     }
     let data = { user: { id: user.id } };
     const token =await jwt.sign(data, jwt_secure_key);
-    res.json({ token: token })
+    success=true;
+    res.json({success:success, token: token })
 
 })
 // route=3 userdetail http://localhost:7000/api/auth/userdetail login require.

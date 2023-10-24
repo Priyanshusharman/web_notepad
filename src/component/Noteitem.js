@@ -1,7 +1,7 @@
 import React,{useContext, useEffect} from 'react'
 import notescontext from '../context/notes/notescontext';
 const Noteitem = (props) => {
-    const {deletenotes,updatenotes}=useContext(notescontext)
+    const {deletenotes,updatenotes, setde,clear}=useContext(notescontext)
     const { note } = props;
     const deleten=()=>{
         deletenotes(note._id)
@@ -11,9 +11,11 @@ const Noteitem = (props) => {
     const notes=document.querySelector("#notes");
     const editn= async ()=>{
         await updatenotes(note._id,name.value,notes.value,tag.value);
+        setde(-1);
+        clear();
     }
     const update = () => {
-        console.log("update")
+        setde(0);
         name.value=note.notes_name;
         tag.value=note.tag;
         notes.value=note.notes;

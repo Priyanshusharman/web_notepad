@@ -5,16 +5,18 @@ const Notestate = (props) => {
   const [totalnotes, setnotes] = useState([]);
   //get notes
   const getnotes = async () => {
+    if(!localStorage.getItem('token')){
+    window.location.pathname="/login";}
     const requestOptions = {
       method: 'Get',
       headers:
       {
-        'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjRlYzM5M2JkMWQ4ZGYwYjg3ZTRiZjA5In0sImlhdCI6MTY5NTYyODUwMH0.qajZbgtNSf34-Nit5-Aetqagz8uNyRkANU2JTqzRyks'
+        'auth-token': localStorage.getItem('token')
       }
     };
     const fatchnotes = await fetch('http://localhost:7000/api/notes/getnotes', requestOptions)
     const json = await fatchnotes.json();
-    console.log(json)
+    // console.log(json)
     setnotes(json);
   }
   //add notes
@@ -26,7 +28,7 @@ const Notestate = (props) => {
       {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjRlYzM5M2JkMWQ4ZGYwYjg3ZTRiZjA5In0sImlhdCI6MTY5NTYyODUwMH0.qajZbgtNSf34-Nit5-Aetqagz8uNyRkANU2JTqzRyks'
+        'auth-token': localStorage.getItem('token')
       },
       body: JSON.stringify({
         "notes_name": notes_name,
@@ -56,7 +58,7 @@ const Notestate = (props) => {
       {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjRlYzM5M2JkMWQ4ZGYwYjg3ZTRiZjA5In0sImlhdCI6MTY5NTYyODUwMH0.qajZbgtNSf34-Nit5-Aetqagz8uNyRkANU2JTqzRyks'
+        'auth-token': localStorage.getItem('token')
       },
       body: JSON.stringify({
         "notes_name": notes_name,
@@ -73,7 +75,7 @@ const Notestate = (props) => {
       method: 'delete',
       headers:
       {
-        'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjRlYzM5M2JkMWQ4ZGYwYjg3ZTRiZjA5In0sImlhdCI6MTY5NTYyODUwMH0.qajZbgtNSf34-Nit5-Aetqagz8uNyRkANU2JTqzRyks'
+        'auth-token': localStorage.getItem('token')
       }
     })
     getnotes();
@@ -85,8 +87,9 @@ const Notestate = (props) => {
     document.querySelector("#tag").value="";
     document.querySelector("#notes").value="";
   }
+  const [de, setde] = useState(-1);
   return (
-    <notescontext.Provider value={{ totalnotes, addnotes, updatenotes, deletenotes, getnotes ,clear}}>
+    <notescontext.Provider value={{ totalnotes, addnotes, updatenotes, deletenotes, getnotes ,clear,de, setde}}>
       {props.children}
     </notescontext.Provider>
   )

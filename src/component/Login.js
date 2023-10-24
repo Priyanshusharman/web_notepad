@@ -27,9 +27,12 @@ export default function Login() {
           const json =await ltoken.json();
           if(json.success){
             localStorage.setItem('token',json.token);
-            navigation('/')
+            navigation('/');
+            // window.location.pathname='/';
           }
-          console.log(json);
+          else{
+            alert("in valid")
+          }
 
     }
     return (

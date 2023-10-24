@@ -1,8 +1,10 @@
 import React,{useState} from 'react'
+import { useNavigate } from 'react-router-dom'
 
 export default function Singup() {
   const [credential,updatecredential]=useState({name:'',email:'',password:''})
   const onchange=(e)=>{updatecredential({...credential,[e.target.name]:e.target.value})}
+  const navigation=useNavigate();
   const signupfun=async (e)=>{
     e.preventDefault();
     const requestOptions = {
@@ -20,7 +22,14 @@ export default function Singup() {
       };
       const signtoken=await fetch('http://localhost:7000/api/auth/signup', requestOptions)
       const json =await signtoken.json()
-      console.log(json);
+      if(json.success){
+        localStorage.setItem('token',json.token);
+        // window.location.pathname='/';
+        navigation('/');
+      }
+      else{
+        alert("in valid")
+      }
 }
   return (
     <form className='container' onSubmit={signupfun}>

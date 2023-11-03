@@ -10,7 +10,6 @@ const Home = () => {
   // const ref = useRef(null) , useRef 
   return (
     <>
-      <Addnotes/>
       <div className="container">
         <h2>YOUR notes</h2>
         <div className="row">
@@ -22,6 +21,7 @@ const Home = () => {
           })}
         </div>
       </div>
+          <Addnotes id='addnote'/>
 
     </>
   )

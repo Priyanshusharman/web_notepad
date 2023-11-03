@@ -21,9 +21,6 @@ export default function Navbar() {
                 <Link className="nav-link active" aria-current="page" to="/about">About</Link>
               </li>
             </ul>
-            {/* {!localStorage.getItem('token') ? <form className="d-flex" role="search">
-              <Link className='btn btn-primary mx-1' to="/login">Login</Link>
-        <Link className='btn btn-primary mx-1' to="signup">signup</Link> </form> : <button className="btn btn-primary" onClick={logout}>Logout</button>} */}
             <form className="d-flex" role="search">
               <Link className='btn btn-primary mx-1' to="/login" disabled={localStorage.getItem('token')} hidden={localStorage.getItem('token')}>Login</Link>
               <Link className='btn btn-primary mx-1' to="signup" disabled={localStorage.getItem('token')} hidden={localStorage.getItem('token')} >signup</Link> </form>
